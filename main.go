@@ -19,6 +19,6 @@ func handleRequests() {
 	myRouter.HandleFunc("/user/{user_id}", getUser).Methods("GET")
 	myRouter.HandleFunc("/user", createUser).Methods("POST")
 	myRouter.HandleFunc("/user/{user_id}", deleteUser).Methods("DELETE")
-	log.Fatal(http.ListenAndServe(":3000", myRouter))
+	log.Fatal(http.ListenAndServe(":3030", myRouter))
 }
 
