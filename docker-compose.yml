@@ -9,3 +9,10 @@ services:
     environment:
       - GO111MODULE=on
       - CGO_ENABLED=0
+    networks:
+      - laradock_backend
+
+networks:
+  laradock_backend:
+    external: true
+
