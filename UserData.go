@@ -95,7 +95,6 @@ func getNotif(w http.ResponseWriter, r *http.Request) {
 	reqBody, err := ioutil.ReadAll(r.Body)
 	fmt.Println(" getNotif  " + string(reqBody))
 	json.Unmarshal(reqBody, &responseUserStatus)
-	fmt.Println("getNotif : " + responseUserStatus.UserId)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -111,6 +110,7 @@ func getNotif(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	fmt.Println("getNotif : " + responseString(responseUserStatus))
 	json.NewEncoder(w).Encode(responseUserStatus)
 }
 
@@ -145,8 +145,7 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 
 	var updatedUser UserData
 	json.Unmarshal(reqBody, &updatedUser)
-	fmt.Println("update  updatedUser: " + updatedUser.Status)
-
+	fmt.Println(" updateUser  " + string(reqBody))
 	var responseUserStatus ResponseUserStatus
 	responseUserStatus.UserId = userID
 	responseUserStatus.Desc = "failed to update status"
@@ -163,5 +162,10 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	fmt.Println("update : " + responseString(responseUserStatus))
 	json.NewEncoder(w).Encode(responseUserStatus)
+}
+
+func responseString(status ResponseUserStatus) string {
+	return "UserId" + status.UserId + ", status " + status.Status + ", desc " + status.Desc
 }
