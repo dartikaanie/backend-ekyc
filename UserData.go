@@ -51,7 +51,9 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {
 			msg := "Content-Type header is not application/json"
+			fmt.Println(msg)
 			http.Error(w, msg, http.StatusUnsupportedMediaType)
+
 			return
 		}
 	}
@@ -86,6 +88,7 @@ func getNotif(w http.ResponseWriter, r *http.Request) {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {
 			msg := "Content-Type header is not application/json"
+			fmt.Println(msg)
 			http.Error(w, msg, http.StatusUnsupportedMediaType)
 			return
 		}
@@ -93,7 +96,7 @@ func getNotif(w http.ResponseWriter, r *http.Request) {
 
 	var responseUserStatus ResponseUserStatus
 	reqBody, err := ioutil.ReadAll(r.Body)
-	fmt.Println(" getNotif  " + string(reqBody))
+	fmt.Println(" getNotif request " + string(reqBody))
 	json.Unmarshal(reqBody, &responseUserStatus)
 
 	if err != nil {
@@ -110,7 +113,7 @@ func getNotif(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println("getNotif : " + responseString(responseUserStatus))
+	fmt.Println("getNotif response: " + responseString(responseUserStatus))
 	json.NewEncoder(w).Encode(responseUserStatus)
 }
 
@@ -138,6 +141,7 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 		value, _ := header.ParseValueAndParams(r.Header, "Content-Type")
 		if value != "application/json" {
 			msg := "Content-Type header is not application/json"
+			fmt.Println(msg)
 			http.Error(w, msg, http.StatusUnsupportedMediaType)
 			return
 		}
@@ -167,5 +171,5 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseString(status ResponseUserStatus) string {
-	return "UserId" + status.UserId + ", status " + status.Status + ", desc " + status.Desc
+	return "{ 'user_id' :" + status.UserId + ", status :" + status.Status + ", description :" + status.Desc + " }"
 }
